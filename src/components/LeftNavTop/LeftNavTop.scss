@@ -1,0 +1,62 @@
+.logo {
+  padding-top: 2em;
+  padding-bottom: 4.75em;
+  text-align: center;
+
+  img {
+    display: inline-block;
+    height: 5em;
+  }
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  row-gap: 1em;
+
+  a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    display: inline-flex;
+    line-height: 1.6;
+    width: 65%;
+    margin: 0 auto;
+    padding: 0 1em;
+    font-size: 1.1rem;
+    height: 2.25em;
+    transition: all 1s ease-in-out;
+    border-radius: 1.5em;
+
+    img {
+      margin-right: 0.6em;
+    }
+
+    span {
+      align-self: center;
+    }
+  }
+
+  a:hover {
+    background-image: -webkit-linear-gradient(180deg, #9452ff, #51c0ff);
+    transition: all 0.7s ease-in-out;
+  }
+}
+
+@media (min-width: 500px) {
+  .nav{
+    a {
+      width: 40%;
+    }
+  }
+}
+
+@media (min-width: 720px) {
+  .nav {
+    a {
+      width: 100%;
+    }
+  }
+}
