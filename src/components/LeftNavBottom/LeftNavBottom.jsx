@@ -20,7 +20,7 @@ function LeftNavBottom() {
 
   return (
     <div className="bottom-content">
-      <button className="btn-primary" onClick={connectWallet} style={{ display: connectedWallet !== "0x" && "none" }}>
+      <button className="btn-primary" onClick={connectWallet} style={{ display: connectedWallet !== "" && "none" }}>
         Connect Wallet
       </button>
       <div className="social-ic">

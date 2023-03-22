@@ -13,7 +13,7 @@ function PendingSwaps() {
 
   useEffect(() => {
     async function fetchData() {
-      if (connectedWallet !== "0x") {
+      if (connectedWallet !== "") {
         const response = await api.getPendingSwapsForWallet(connectedWallet);
 
         setPending(response.data.reverse());

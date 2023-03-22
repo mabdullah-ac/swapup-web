@@ -6,14 +6,16 @@ import api from "../../utils/api";
 import utils from "../../utils/utils";
 import CheckIcon from "../../assets/checked-icon.png";
 import CancelIcon from "../../assets/cancel-icon.svg";
+import HistoryModal from "../HistoryModal/HistoryModal";
 
 function History() {
   const { connectedWallet } = useAppContext();
   const [history, setHistory] = useState([]);
+  const [modalActive, setModalActive] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
-      if (connectedWallet !== "0x") {
+      if (connectedWallet !== "") {
         const response = await api.getSwapHistoryForWallet(connectedWallet);
         const filtered = response.data.filter((el) => el.status !== 1);
 
@@ -38,7 +40,7 @@ function History() {
   };
 
   const summaryUI = () => {
-    return "View";
+    return <span onClick={() => setModalActive(true)}>View</span>;
   };
 
   const statusUI = (history) => {
@@ -102,6 +104,7 @@ function History() {
 
   return (
     <>
+      {modalActive && <HistoryModal />}
       <Table data={history} config={config} keyFn={keyFn} />
     </>
   );

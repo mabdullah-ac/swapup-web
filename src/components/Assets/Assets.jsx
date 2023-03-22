@@ -10,8 +10,10 @@ function Assets() {
 
   useEffect(() => {
     async function fetchData() {
-      if (connectedWallet !== "0x") {
+      if (connectedWallet !== "") {
         const response = await api.getNftsForWallet(connectedWallet);
+
+        console.log(response);
 
         setNfts(response);
       }
