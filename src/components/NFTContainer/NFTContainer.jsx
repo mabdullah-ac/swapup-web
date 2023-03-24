@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import api from "../../utils/api";
 import NFTCard from "../NFTCard/NFTCard";
 
-function NFTContainer({ wallet, selectedNFTs, setSelectedNFTs }) {
+function NFTContainer({ wallet, selectedNFTs, setSelectedNFTs, pending }) {
   const [nfts, setNfts] = useState([]);
 
   useEffect(() => {
@@ -14,9 +14,9 @@ function NFTContainer({ wallet, selectedNFTs, setSelectedNFTs }) {
     };
 
     fetchNfts();
-  }, [wallet]);
+  }, [wallet, pending]);
 
-  const renderedNFTs = nfts.map((nft) => <NFTCard key={nft.tokenUri.raw} nft={nft} selectedNFTs={selectedNFTs} setSelectedNFTs={setSelectedNFTs} />);
+  const renderedNFTs = nfts.map((nft) => <NFTCard key={nft.tokenUri.raw} pending={pending} nft={nft} selectedNFTs={selectedNFTs} setSelectedNFTs={setSelectedNFTs} />);
 
   return <div className="nft-container">{renderedNFTs}</div>;
 }

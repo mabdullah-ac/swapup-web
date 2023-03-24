@@ -1,5 +1,5 @@
 import "./Swap.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useAppContext from "../../hooks/use-app-context";
 import NFTContainer from "../../components/NFTContainer/NFTContainer";
@@ -14,9 +14,39 @@ function SwapPage() {
   const [secondaryWallet, setSecondaryWallet] = useState("");
   const [primarySelected, setPrimarySelected] = useState([]);
   const [secondarySelected, setSecondarySelected] = useState([]);
+  const [primaryPending, setPrimaryPending] = useState(null);
+  const [secondaryPending, setSecondaryPending] = useState(null);
 
   const params = useParams();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchPending = async () => {
+      const pending = await api.getPendingSwapsForWallet(connectedWallet);
+
+      if (pending.success) {
+        setPrimaryPending(pending.data);
+      }
+    };
+
+    if (connectedWallet) {
+      fetchPending();
+    }
+  }, [connectedWallet]);
+
+  useEffect(() => {
+    const fetchPending = async () => {
+      const pending = await api.getPendingSwapsForWallet(secondaryWallet);
+
+      if (pending.success) {
+        setSecondaryPending(pending.data);
+      }
+    };
+
+    if (secondaryWallet.length === 42) {
+      fetchPending();
+    }
+  }, [secondaryWallet]);
 
   const handleSendClick = async () => {
     //make sure atleast one nft is selected on either side
@@ -73,13 +103,13 @@ function SwapPage() {
           <SwapCard>
             <SwapHeader />
             <SwapSearch wallet={connectedWallet} disabled={true} />
-            {connectedWallet && <NFTContainer wallet={connectedWallet} selectedNFTs={primarySelected} setSelectedNFTs={setPrimarySelected} />}
+            {connectedWallet && primaryPending && <NFTContainer wallet={connectedWallet} pending={primaryPending} selectedNFTs={primarySelected} setSelectedNFTs={setPrimarySelected} />}
           </SwapCard>
 
           <SwapCard>
             <SwapHeader />
             <SwapSearch wallet={secondaryWallet} setWallet={setSecondaryWallet} disabled={params.swapId ? true : false} />
-            {secondaryWallet.length === 42 && <NFTContainer wallet={secondaryWallet} selectedNFTs={secondarySelected} setSelectedNFTs={setSecondarySelected} />}
+            {secondaryWallet.length === 42 && secondaryPending && <NFTContainer wallet={secondaryWallet} pending={secondaryPending} selectedNFTs={secondarySelected} setSelectedNFTs={setSecondarySelected} />}
           </SwapCard>
         </div>
 
