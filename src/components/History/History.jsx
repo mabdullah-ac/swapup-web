@@ -1,12 +1,31 @@
 import "./History.scss";
 import { useEffect, useState } from "react";
-import Table from "../Table/Table";
 import useAppContext from "../../hooks/use-app-context";
+import Table from "../Table/Table";
 import api from "../../utils/api";
 import utils from "../../utils/utils";
 import CheckIcon from "../../assets/checked-icon.png";
 import CancelIcon from "../../assets/cancel-icon.svg";
-import HistoryModal from "../HistoryModal/HistoryModal";
+import Modal from "react-modal";
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+  overlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+  },
+};
 
 function History() {
   const { connectedWallet } = useAppContext();
@@ -40,7 +59,11 @@ function History() {
   };
 
   const summaryUI = () => {
-    return <span onClick={() => setModalActive(true)}>View</span>;
+    return (
+      <span className="view-modal-btn" onClick={() => setModalActive(true)}>
+        View
+      </span>
+    );
   };
 
   const statusUI = (history) => {
@@ -102,9 +125,31 @@ function History() {
     return history.id;
   };
 
+  const closeModal = () => {
+    setModalActive(false);
+  };
+
   return (
     <>
-      {modalActive && <HistoryModal />}
+      <Modal
+        isOpen={modalActive}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="History Modal"
+      >
+        <div>Swap Summary</div>
+        <div>
+          <div>
+            <p></p>
+            <img alt="" />
+          </div>
+          <div>
+            <p></p>
+            <img alt="" />
+          </div>
+        </div>
+      </Modal>
       <Table data={history} config={config} keyFn={keyFn} />
     </>
   );
