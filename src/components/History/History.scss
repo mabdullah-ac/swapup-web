@@ -18,3 +18,11 @@
 .view-modal-btn {
   cursor: pointer;
 }
+
+.modal-body {
+  display: flex;
+
+  img {
+    max-height: 25%;
+  }
+}

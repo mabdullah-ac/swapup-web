@@ -27,10 +27,13 @@ const customStyles = {
   },
 };
 
+Modal.setAppElement("#root");
+
 function History() {
   const { connectedWallet } = useAppContext();
   const [history, setHistory] = useState([]);
-  const [modalActive, setModalActive] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalData, setModalData] = useState({});
 
   useEffect(() => {
     async function fetchData() {
@@ -49,28 +52,38 @@ function History() {
     fetchData();
   }, [connectedWallet]);
 
-  const walletUI = (history) => {
-    const acceptAddress = connectedWallet === history.init_address ? history.accept_address : history.init_address;
+  const walletUI = (h) => {
+    const acceptAddress = connectedWallet === h.init_address ? h.accept_address : h.init_address;
     return utils.shortenWalletAddress(acceptAddress);
   };
 
-  const dateUI = (history) => {
-    return utils.formatDate(history.createdAt);
+  const dateUI = (h) => {
+    return utils.formatDate(h.createdAt);
   };
 
-  const summaryUI = () => {
+  const summaryUI = (h) => {
+    const temp = { ...h };
+
+    temp.metadata = JSON.parse(temp.metadata);
+
     return (
-      <span className="view-modal-btn" onClick={() => setModalActive(true)}>
+      <span
+        className="view-modal-btn"
+        onClick={() => {
+          setIsModalOpen(true);
+          setModalData(temp);
+        }}
+      >
         View
       </span>
     );
   };
 
-  const statusUI = (history) => {
+  const statusUI = (h) => {
     let statusText;
     let icon;
 
-    switch (history.status) {
+    switch (h.status) {
       case 0: //cancelled
         statusText = "Cancelled";
         break;
@@ -99,11 +112,11 @@ function History() {
     );
   };
 
-  const txnUI = (history) => {
-    if (history.tx !== "undefined") {
+  const txnUI = (h) => {
+    if (h.tx !== "undefined") {
       const txn = (
-        <a className="history-link" href={`${utils.etherscanUrl}/${history.tx}`} rel="noreferrer" target="_blank">
-          {`${history.tx.substring(0, 10)}...`}
+        <a className="history-link" href={`${utils.etherscanUrl}/${h.tx}`} rel="noreferrer" target="_blank">
+          {`${h.tx.substring(0, 10)}...`}
         </a>
       );
 
@@ -113,40 +126,53 @@ function History() {
     return "";
   };
 
+  // h represents a single object from the history array.
   const config = [
-    { label: "Wallet", render: (history) => walletUI(history) },
-    { label: "Date", render: (history) => dateUI(history) },
-    { label: "Swap Summary", render: () => summaryUI() },
-    { label: "Status", render: (history) => statusUI(history) },
-    { label: "TXN #", render: (history) => txnUI(history) },
+    { label: "Wallet", render: (h) => walletUI(h) },
+    { label: "Date", render: (h) => dateUI(h) },
+    { label: "Swap Summary", render: (h) => summaryUI(h) },
+    { label: "Status", render: (h) => statusUI(h) },
+    { label: "TXN #", render: (h) => txnUI(h) },
   ];
 
-  const keyFn = (history) => {
-    return history.id;
+  const keyFn = (h) => {
+    return h.id;
   };
 
   const closeModal = () => {
-    setModalActive(false);
+    setIsModalOpen(false);
   };
 
   return (
     <>
       <Modal
-        isOpen={modalActive}
+        isOpen={isModalOpen}
         // onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
         contentLabel="History Modal"
       >
         <div>Swap Summary</div>
-        <div>
+        <div className="modal-body">
           <div>
-            <p></p>
-            <img alt="" />
+            <p>{connectedWallet}</p>
+            {connectedWallet === modalData.init_address
+              ? modalData.metadata?.init.tokens.map((token) => (
+                  <img key={token.image} src={token.image} alt={token.name} />
+                ))
+              : modalData.metadata?.accept.tokens.map((token) => (
+                  <img key={token.image} src={token.image} alt={token.name} />
+                ))}
           </div>
           <div>
-            <p></p>
-            <img alt="" />
+            <p>{connectedWallet === modalData.init_address ? modalData.accept_address : modalData.init_address}</p>
+            {connectedWallet === modalData.init_address
+              ? modalData.metadata?.accept.tokens.map((token) => (
+                  <img key={token.image} src={token.image} alt={token.name} />
+                ))
+              : modalData.metadata?.init.tokens.map((token) => (
+                  <img key={token.image} src={token.image} alt={token.name} />
+                ))}
           </div>
         </div>
       </Modal>
