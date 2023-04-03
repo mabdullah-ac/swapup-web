@@ -16,6 +16,11 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
+    backgroundColor: "#22223f",
+    borderRadius: "23px",
+    padding: "30px",
+    width: "65%",
+    color: "#fff",
   },
   overlay: {
     position: "fixed",
@@ -152,26 +157,26 @@ function History() {
         style={customStyles}
         contentLabel="History Modal"
       >
-        <div>Swap Summary</div>
+        <div className="heading">Swap Summary</div>
         <div className="modal-body">
           <div>
             <p>{connectedWallet}</p>
             {connectedWallet === modalData.init_address
-              ? modalData.metadata?.init.tokens.map((token) => (
-                  <img key={token.image} src={token.image} alt={token.name} />
+              ? modalData.metadata?.init.tokens.map((token, index) => (
+                  <img key={index} src={token.image} alt={token.name} />
                 ))
-              : modalData.metadata?.accept.tokens.map((token) => (
-                  <img key={token.image} src={token.image} alt={token.name} />
+              : modalData.metadata?.accept.tokens.map((token, index) => (
+                  <img key={index} src={token.image} alt={token.name} />
                 ))}
           </div>
           <div>
             <p>{connectedWallet === modalData.init_address ? modalData.accept_address : modalData.init_address}</p>
             {connectedWallet === modalData.init_address
-              ? modalData.metadata?.accept.tokens.map((token) => (
-                  <img key={token.image} src={token.image} alt={token.name} />
+              ? modalData.metadata?.accept.tokens.map((token, index) => (
+                  <img key={index} src={token.image} alt={token.name} />
                 ))
-              : modalData.metadata?.init.tokens.map((token) => (
-                  <img key={token.image} src={token.image} alt={token.name} />
+              : modalData.metadata?.init.tokens.map((token, index) => (
+                  <img key={index} src={token.image} alt={token.name} />
                 ))}
           </div>
         </div>

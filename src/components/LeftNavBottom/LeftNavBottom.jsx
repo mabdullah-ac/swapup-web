@@ -1,4 +1,5 @@
 import "./LeftNavBottom.scss";
+import { useEffect } from "react";
 import useAppContext from "../../hooks/use-app-context";
 import { FaTwitter, FaDiscord } from "react-icons/fa";
 import metamask from "../../utils/metamask";
@@ -6,9 +7,26 @@ import metamask from "../../utils/metamask";
 function LeftNavBottom() {
   const { connectedWallet, updateConnectedWallet } = useAppContext();
 
-  const connectWallet = async (forceConnect) => {
+  useEffect(() => {
+    const connect = async () => {
+      try {
+        const userAddress = await metamask.getConnectedWallet();
+
+        if (userAddress) {
+          updateConnectedWallet(userAddress);
+        }
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+
+    connect();
+    // eslint-disable-next-line
+  }, []);
+
+  const connectWallet = async () => {
     try {
-      const userAddress = await metamask.connectWallet();
+      const userAddress = await metamask.connectWallet(true);
 
       if (userAddress) {
         updateConnectedWallet(userAddress);

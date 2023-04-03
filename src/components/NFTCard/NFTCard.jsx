@@ -1,11 +1,12 @@
 import "./NFTCard.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import className from "classnames";
 
 function NFTCard({ nft, selectedNFTs, setSelectedNFTs, pending, isAcceptor, ...rest }) {
   const [isSelected, setIsSelected] = useState(false);
   const [isPending, setIsPending] = useState(false);
+  const el = useRef();
 
   const { pathname } = useLocation();
   const { swapId } = useParams();
@@ -51,12 +52,14 @@ function NFTCard({ nft, selectedNFTs, setSelectedNFTs, pending, isAcceptor, ...r
           (selectedNFT) => selectedNFT.id !== id && selectedNFT.address !== nft.contract.address
         );
         setSelectedNFTs([...filtered, { id, type, address }]);
+        el.current.style.order = -2;
         // setSelectedNFTs([...selectedNFTs, { id, type, address }]);
       } else {
         const filtered = selectedNFTs.filter(
           (selectedNFT) => selectedNFT.id !== nft.tokenId && selectedNFT.address !== nft.contract.address
         );
         setSelectedNFTs(filtered);
+        el.current.style.order = 0;
       }
     }
 
@@ -98,7 +101,7 @@ function NFTCard({ nft, selectedNFTs, setSelectedNFTs, pending, isAcceptor, ...r
   };
 
   return (
-    <div {...rest} className="nft-card">
+    <div {...rest} className="nft-card" ref={el}>
       <img
         src={nft.rawMetadata.image}
         alt={nft.rawMetadata.name}

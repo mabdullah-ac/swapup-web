@@ -10,6 +10,8 @@ function NFTContainer({ wallet, selectedNFTs, setSelectedNFTs, pending, isAccept
     const fetchNfts = async () => {
       const response = await api.getNftsForWallet(wallet);
 
+      console.log(response);
+
       setNfts(response);
     };
 
@@ -18,7 +20,7 @@ function NFTContainer({ wallet, selectedNFTs, setSelectedNFTs, pending, isAccept
 
   const renderedNFTs = nfts.map((nft) => (
     <NFTCard
-      key={nft.tokenUri.raw}
+      key={`${nft.contract.address}_${nft.tokenId}`}
       id={`${nft.contract.address}_${nft.tokenId}`}
       pending={pending}
       nft={nft}

@@ -1,5 +1,5 @@
-import { ethers } from "ethers";
 import abi from "./abi";
+import { ethers } from "ethers";
 
 const metamask = {
   networkName: "goerli",
@@ -15,13 +15,12 @@ const metamask = {
     if (typeof window.ethereum !== "undefined") {
       //ethereum.request( {method: "eth_requestAccounts" } );
       this.provider = new ethers.providers.Web3Provider(window.ethereum, "any");
-      await this.provider.send("eth_requestAccounts", []);
       // The "any" network will allow spontaneous network changes
       this.provider.on("network", (newNetwork, oldNetwork) => {
         // When a Provider makes its initial connection, it emits a "network"
         // event with a null oldNetwork along with the newNetwork. So, if the
         // oldNetwork exists, it represents a changing network
-        // console.log(oldNetwork, newNetwork);
+        console.log(oldNetwork, newNetwork);
         if (oldNetwork) {
           window.location.reload();
         }
@@ -34,7 +33,7 @@ const metamask = {
       });
 
       let network = await this.provider.getNetwork();
-      // console.log(network);
+      console.log(network);
 
       //make sure we are connected to the right network in metamask
       if (network.name !== this.networkName) {
@@ -42,31 +41,22 @@ const metamask = {
         return;
       }
 
-      // if (!forceConnect) {
-      //   const accounts = await ethereum.request({
-      //     method: "eth_accounts",
-      //   });
-      //   if (accounts.length > 0) {
-      //     ui.showHideControl(false, "btnConnectWallet");
-      //   } else {
-      //     ui.showHideControl(true, "btnConnectWallet");
-      //     return;
-      //   }
-      // } else {
-      //   await this.provider.send("eth_requestAccounts", []);
-      // }
+      if (!forceConnect) {
+        await window.ethereum.request({
+          method: "eth_accounts",
+        });
+      } else {
+        await this.provider.send("eth_requestAccounts", []);
+      }
 
       this.signer = this.provider.getSigner();
       let userAddress = await this.signer.getAddress();
-      // console.log("Current Signer: ", userAddress);
+      console.log("Current Signer: ", userAddress);
+      // if (typeof home !== "undefined") home.loadNftsOnMainPage();
 
-      if (userAddress === undefined) {
-        alert("Could not get wallet address");
-      } else {
-        return userAddress;
-      }
+      if (userAddress === undefined) alert("Could not get wallet address");
     } else {
-      alert("metamask not connected");
+      alert("Please install metamask.");
     }
   },
 
@@ -253,7 +243,10 @@ const metamask = {
       return abiEncoder.encode(["address", "uint", "uint"], [nft.address, nft.id, type]);
     });
     const encodedInitBytes = abiEncoder.encode(["bytes[]", "address"], [encodedInitNftBytesArray, swap.init_address]);
-    const encodedAcceptBytes = abiEncoder.encode(["bytes[]", "address"], [encodedAcceptNftBytesArray, swap.accept_address]);
+    const encodedAcceptBytes = abiEncoder.encode(
+      ["bytes[]", "address"],
+      [encodedAcceptNftBytesArray, swap.accept_address]
+    );
     let finalBytes = abiEncoder.encode(["bytes[]"], [[encodedInitBytes, encodedAcceptBytes]]);
     return finalBytes;
   },
