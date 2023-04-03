@@ -10,8 +10,6 @@ function NFTContainer({ wallet, selectedNFTs, setSelectedNFTs, pending, isAccept
     const fetchNfts = async () => {
       const response = await api.getNftsForWallet(wallet);
 
-      console.log(response);
-
       setNfts(response);
     };
 

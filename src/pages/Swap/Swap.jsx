@@ -8,6 +8,8 @@ import SwapHeader from "../../components/SwapHeader/SwapHeader";
 import SwapSearch from "../../components/SwapSearch/SwapSearch";
 import api from "../../utils/api";
 import metamask from "../../utils/metamask";
+import CheckedIcon from "../../assets/checked-icon.png";
+import UncheckedIcon from "../../assets/un-checked.png";
 
 function SwapPage() {
   const { connectedWallet } = useAppContext();
@@ -253,7 +255,10 @@ function SwapPage() {
       <div className="swap-container">
         <div className="swapcards-container">
           <SwapCard>
-            <SwapHeader />
+            {!params.swapId && <SwapHeader icon={UncheckedIcon} />}
+            {params.swapId && !isAcceptor && <SwapHeader icon={CheckedIcon} />}
+            {params.swapId && isAcceptor && <SwapHeader icon={UncheckedIcon} />}
+
             <SwapSearch wallet={connectedWallet} disabled={true} />
             {connectedWallet && primaryPending && (
               <NFTContainer
@@ -267,7 +272,11 @@ function SwapPage() {
           </SwapCard>
 
           <SwapCard>
-            <SwapHeader />
+            {!params.swapId && <SwapHeader icon={UncheckedIcon} />}
+            {params.swapId && !isAcceptor && <SwapHeader icon={UncheckedIcon} />}
+            {params.swapId && isAcceptor && isOfferUnedited && <SwapHeader icon={CheckedIcon} />}
+            {params.swapId && isAcceptor && !isOfferUnedited && <SwapHeader icon={UncheckedIcon} />}
+
             <SwapSearch
               wallet={secondaryWallet}
               setWallet={setSecondaryWallet}

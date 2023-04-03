@@ -48,18 +48,22 @@ function NFTCard({ nft, selectedNFTs, setSelectedNFTs, pending, isAcceptor, ...r
         const type = nft.tokenType;
         const address = nft.contract.address;
 
-        const filtered = selectedNFTs.filter(
+        const temp = [...selectedNFTs];
+
+        const filtered = temp.filter(
           (selectedNFT) => selectedNFT.id !== id && selectedNFT.address !== nft.contract.address
         );
+
         setSelectedNFTs([...filtered, { id, type, address }]);
-        el.current.style.order = -2;
+        // el.current.style.order = -2;
         // setSelectedNFTs([...selectedNFTs, { id, type, address }]);
       } else {
         const filtered = selectedNFTs.filter(
           (selectedNFT) => selectedNFT.id !== nft.tokenId && selectedNFT.address !== nft.contract.address
         );
+
         setSelectedNFTs(filtered);
-        el.current.style.order = 0;
+        // el.current.style.order = 0;
       }
     }
 
