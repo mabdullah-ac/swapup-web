@@ -21,7 +21,7 @@ function Assets() {
     fetchData();
   }, [connectedWallet]);
 
-  const renderedCards = nfts.map((nft) => <NFTCard key={nft.tokenUri.raw} nft={nft} />);
+  const renderedCards = nfts.map((nft, index) => <NFTCard key={index} nft={nft} />);
 
   return (
     <>

@@ -20,6 +20,7 @@ function NFTCard({ nft, selectedNFTs, setSelectedNFTs, pending, isAcceptor, ...r
 
       if (isPartOfPendingSwap(nft.tokenId, nft.contract.address, pendingNFTs)) {
         setIsPending(true);
+        el.current.style.order = -1;
       }
     }
 
@@ -29,13 +30,12 @@ function NFTCard({ nft, selectedNFTs, setSelectedNFTs, pending, isAcceptor, ...r
         metadata: JSON.parse(p.metadata),
       }));
 
-      if (
-        isPartOfPendingSwap(nft.tokenId, nft.contract.address, pendingNFTs) &&
-        isPartOfSelectedSwap(nft.tokenId, nft.contract.address, selectedNFTs)
-      ) {
+      if (isPartOfSelectedSwap(nft.tokenId, nft.contract.address, selectedNFTs)) {
         setIsSelected(true);
+        el.current.style.order = -2;
       } else if (isPartOfPendingSwap(nft.tokenId, nft.contract.address, pendingNFTs)) {
         setIsPending(true);
+        el.current.style.order = -1;
       }
     }
     // eslint-disable-next-line
@@ -48,31 +48,43 @@ function NFTCard({ nft, selectedNFTs, setSelectedNFTs, pending, isAcceptor, ...r
         const type = nft.tokenType;
         const address = nft.contract.address;
 
-        const temp = [...selectedNFTs];
+        const filtered = selectedNFTs.filter((selectedNFT) => {
+          if (selectedNFT.id === nft.tokenId) {
+            if (selectedNFT.address === nft.contract.address) {
+              return false;
+            }
+          }
 
-        const filtered = temp.filter(
-          (selectedNFT) => selectedNFT.id !== id && selectedNFT.address !== nft.contract.address
-        );
+          return true;
+        });
 
         setSelectedNFTs([...filtered, { id, type, address }]);
-        // el.current.style.order = -2;
-        // setSelectedNFTs([...selectedNFTs, { id, type, address }]);
       } else {
-        const filtered = selectedNFTs.filter(
-          (selectedNFT) => selectedNFT.id !== nft.tokenId && selectedNFT.address !== nft.contract.address
-        );
+        const filtered = selectedNFTs.filter((selectedNFT) => {
+          if (selectedNFT.id === nft.tokenId) {
+            if (selectedNFT.address === nft.contract.address) {
+              return false;
+            }
+          }
+
+          return true;
+        });
 
         setSelectedNFTs(filtered);
-        // el.current.style.order = 0;
       }
     }
 
     // eslint-disable-next-line
   }, [isSelected]);
 
-  const handleClick = () => {
+  const handleClick = (e) => {
     if (!isPending) {
+      e.target.parentNode.style.order = -2;
       setIsSelected(!isSelected);
+    }
+
+    if (isSelected) {
+      e.target.parentNode.style.order = 0;
     }
   };
 
