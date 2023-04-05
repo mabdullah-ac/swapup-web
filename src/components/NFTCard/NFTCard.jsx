@@ -42,6 +42,25 @@ function NFTCard({ nft, selectedNFTs, setSelectedNFTs, pending, isAcceptor, ...r
   }, []);
 
   useEffect(() => {
+    if (pathname === "/swap") {
+      setIsSelected(false);
+      el.current.style.order = 0;
+
+      const pendingNFTs = pending.map((p) => ({
+        id: p.id,
+        metadata: JSON.parse(p.metadata),
+      }));
+
+      if (isPartOfPendingSwap(nft.tokenId, nft.contract.address, pendingNFTs)) {
+        setIsPending(true);
+        el.current.style.order = -1;
+      }
+    }
+
+    // eslint-disable-next-line
+  }, [swapId]);
+
+  useEffect(() => {
     if (pathname === "/swap" || isAcceptor) {
       if (isSelected) {
         const id = nft.tokenId;

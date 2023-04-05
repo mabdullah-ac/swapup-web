@@ -29,6 +29,13 @@ function SwapPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setPrimarySelected([]);
+    setSecondarySelected([]);
+    setSecondaryWallet("");
+    setIsAcceptor(false);
+  }, [params.swapId]);
+
+  useEffect(() => {
     const fetchPending = async () => {
       const pending = await api.getPendingSwapsForWallet(connectedWallet);
 
