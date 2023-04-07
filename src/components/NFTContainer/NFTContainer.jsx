@@ -2,18 +2,36 @@ import "./NFTContainer.scss";
 import { useEffect, useState } from "react";
 import api from "../../utils/api";
 import NFTCard from "../NFTCard/NFTCard";
+import loaderImg from "../../assets/Interwind-1s-200px.svg";
 
-function NFTContainer({ wallet, selectedNFTs, setSelectedNFTs, pending, isAcceptor }) {
+function NFTContainer({
+  wallet,
+  selectedNFTs,
+  setSelectedNFTs,
+  pending,
+  isAcceptor,
+  isLoading,
+  setIsLoading,
+  rerender,
+}) {
   const [nfts, setNfts] = useState([]);
 
   useEffect(() => {
     const fetchNfts = async () => {
+      if (rerender) {
+        setIsLoading(true);
+      }
       const response = await api.getNftsForWallet(wallet);
 
-      setNfts(response);
+      if (response) {
+        setNfts(response);
+      }
+      setIsLoading(false);
     };
 
     fetchNfts();
+
+    // eslint-disable-next-line
   }, [wallet, pending]);
 
   const renderedNFTs = nfts.map((nft) => (
@@ -28,7 +46,16 @@ function NFTContainer({ wallet, selectedNFTs, setSelectedNFTs, pending, isAccept
     />
   ));
 
-  return <div className="nft-container">{renderedNFTs}</div>;
+  return (
+    <>
+      {isLoading && (
+        <div className="wait-box">
+          <img src={loaderImg} alt="" />
+        </div>
+      )}
+      {!isLoading && <div className="nft-container">{renderedNFTs}</div>};
+    </>
+  );
 }
 
 export default NFTContainer;

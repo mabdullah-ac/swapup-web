@@ -6,17 +6,22 @@ import Table from "../Table/Table";
 import api from "../../utils/api";
 import utils from "../../utils/utils";
 import CancelIcon from "../../assets/cancel-icon.svg";
+import loaderImg from "../../assets/Interwind-1s-200px.svg";
 
 function PendingSwaps() {
   const { connectedWallet } = useAppContext();
   const [pending, setPending] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       if (connectedWallet !== "") {
         const response = await api.getPendingSwapsForWallet(connectedWallet);
 
-        setPending(response.data.reverse());
+        if (response) {
+          setPending(response.data.reverse());
+          setIsLoading(false);
+        }
       }
     }
     fetchData();
@@ -71,7 +76,12 @@ function PendingSwaps() {
 
   return (
     <>
-      <Table data={pending} config={config} keyFn={keyFn} />
+      {isLoading && (
+        <div className="wait-box">
+          <img src={loaderImg} alt="" />
+        </div>
+      )}
+      {!isLoading && <Table data={pending} config={config} keyFn={keyFn} />}
     </>
   );
 }

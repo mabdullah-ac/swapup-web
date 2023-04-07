@@ -1,5 +1,5 @@
 import "./Swap.scss";
-import { useEffect, useState, useRef } from "react";
+import { useLayoutEffect, useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useAppContext from "../../hooks/use-app-context";
 import NFTContainer from "../../components/NFTContainer/NFTContainer";
@@ -21,6 +21,7 @@ function SwapPage() {
   const [isAcceptor, setIsAcceptor] = useState(false);
   const [isOfferUnedited, setIsOfferUnedited] = useState(true);
   const [existingSwap, setExistingSwap] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const initiatorTokens = useRef();
   const acceptorTokens = useRef();
@@ -28,20 +29,25 @@ function SwapPage() {
   const params = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setPrimarySelected([]);
-    setSecondarySelected([]);
+  useLayoutEffect(() => {
     setSecondaryWallet("");
-    setIsAcceptor(false);
+    setSecondarySelected([]);
+
+    // eslint-disable-next-line
   }, [params.swapId]);
 
   useEffect(() => {
     const fetchPending = async () => {
+      if (!params.swapId) {
+        setIsLoading(true);
+      }
+
       const pending = await api.getPendingSwapsForWallet(connectedWallet);
 
       if (pending.success) {
         setPrimaryPending(pending.data);
       }
+      setIsLoading(false);
     };
 
     const fetchSwapData = async () => {
@@ -76,7 +82,7 @@ function SwapPage() {
       fetchPending();
     }
 
-    if (connectedWallet && params.swapId) {
+    if (connectedWallet && params?.swapId) {
       fetchSwapData();
     }
   }, [connectedWallet, params.swapId]);
@@ -274,6 +280,9 @@ function SwapPage() {
                 selectedNFTs={primarySelected}
                 setSelectedNFTs={setPrimarySelected}
                 isAcceptor={isAcceptor}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                rerender={true}
               />
             )}
           </SwapCard>
@@ -296,15 +305,17 @@ function SwapPage() {
                 selectedNFTs={secondarySelected}
                 setSelectedNFTs={setSecondarySelected}
                 isAcceptor={isAcceptor}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
               />
             )}
           </SwapCard>
         </div>
 
-        {primarySelected.length > 0 && secondarySelected.length > 0 && (
+        {primarySelected.length > 0 && secondarySelected.length > 0 && !isLoading && (
           <div className="buttons-container">
             {!params.swapId && <span onClick={handleOfferClick}>Send Offer</span>}
-            {params.swapId && isAcceptor && isOfferUnedited && (
+            {params.swapId && isAcceptor && isOfferUnedited && !isLoading && (
               <>
                 <span onClick={handleAcceptClick}>Accept</span>
                 <span onClick={handleDeclineClick}>Decline</span>

@@ -7,6 +7,7 @@ import utils from "../../utils/utils";
 import CheckIcon from "../../assets/checked-icon.png";
 import CancelIcon from "../../assets/cancel-icon.svg";
 import Modal from "react-modal";
+import loaderImg from "../../assets/Interwind-1s-200px.svg";
 
 const customStyles = {
   content: {
@@ -39,19 +40,24 @@ function History() {
   const [history, setHistory] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       if (connectedWallet !== "") {
         const response = await api.getSwapHistoryForWallet(connectedWallet);
-        const filtered = response.data.filter((el) => el.status !== 1);
 
-        filtered.sort((a, b) => {
-          let diff = new Date(b.createdAt) - new Date(a.createdAt);
-          return diff;
-        });
+        if (response) {
+          const filtered = response.data.filter((el) => el.status !== 1);
 
-        setHistory(filtered);
+          filtered.sort((a, b) => {
+            let diff = new Date(b.createdAt) - new Date(a.createdAt);
+            return diff;
+          });
+
+          setHistory(filtered);
+          setIsLoading(false);
+        }
       }
     }
     fetchData();
@@ -181,7 +187,12 @@ function History() {
           </div>
         </div>
       </Modal>
-      <Table data={history} config={config} keyFn={keyFn} />
+      {isLoading && (
+        <div className="wait-box">
+          <img src={loaderImg} alt="" />
+        </div>
+      )}
+      {!isLoading && <Table data={history} config={config} keyFn={keyFn} />}
     </>
   );
 }
