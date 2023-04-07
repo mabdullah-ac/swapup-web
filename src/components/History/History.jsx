@@ -44,6 +44,7 @@ function History() {
 
   useEffect(() => {
     async function fetchData() {
+      setIsLoading(true);
       if (connectedWallet !== "") {
         const response = await api.getSwapHistoryForWallet(connectedWallet);
 
@@ -56,9 +57,9 @@ function History() {
           });
 
           setHistory(filtered);
-          setIsLoading(false);
         }
       }
+      setIsLoading(false);
     }
     fetchData();
   }, [connectedWallet]);

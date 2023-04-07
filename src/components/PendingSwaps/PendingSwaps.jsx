@@ -15,14 +15,15 @@ function PendingSwaps() {
 
   useEffect(() => {
     async function fetchData() {
+      setIsLoading(true);
       if (connectedWallet !== "") {
         const response = await api.getPendingSwapsForWallet(connectedWallet);
 
         if (response) {
           setPending(response.data.reverse());
-          setIsLoading(false);
         }
       }
+      setIsLoading(false);
     }
     fetchData();
   }, [connectedWallet]);
