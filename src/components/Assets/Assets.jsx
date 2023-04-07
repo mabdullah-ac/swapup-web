@@ -18,11 +18,9 @@ function Assets() {
 
         if (response) {
           setNfts(response);
-          setIsLoading(false);
         }
-      } else {
-        setIsLoading(false);
       }
+      setIsLoading(false);
     }
     fetchData();
   }, [connectedWallet]);

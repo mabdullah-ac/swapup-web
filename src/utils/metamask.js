@@ -55,6 +55,7 @@ const metamask = {
       // if (typeof home !== "undefined") home.loadNftsOnMainPage();
 
       if (userAddress === undefined) alert("Could not get wallet address");
+      else return userAddress;
     } else {
       alert("Please install metamask.");
     }

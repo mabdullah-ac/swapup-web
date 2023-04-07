@@ -8,7 +8,8 @@ import ProfilePicture from "../../assets/Untitled-2.jpg";
 function HomePage() {
   const { connectedWallet } = useAppContext();
 
-  const accountNumberUI = connectedWallet === "" ? "0x" : `${connectedWallet.slice(0, 8)}...${connectedWallet.slice(36)}`;
+  const accountNumberUI =
+    connectedWallet === "" ? "0x" : `${connectedWallet.slice(0, 8)}...${connectedWallet.slice(36)}`;
 
   return (
     <div className="home-container">
