@@ -10,6 +10,7 @@ import api from "../../utils/api";
 import metamask from "../../utils/metamask";
 import CheckedIcon from "../../assets/checked-icon.png";
 import UncheckedIcon from "../../assets/un-checked.png";
+import AgreementImg from "../../assets/agreement.png";
 
 function SwapPage() {
   const { connectedWallet } = useAppContext();
@@ -32,6 +33,7 @@ function SwapPage() {
   useLayoutEffect(() => {
     setSecondaryWallet("");
     setSecondarySelected([]);
+    setPrimarySelected([]);
 
     // eslint-disable-next-line
   }, [params.swapId]);
@@ -287,11 +289,15 @@ function SwapPage() {
             )}
           </SwapCard>
 
+          <div className="agreement-img">
+            <img src={AgreementImg} alt="" />
+          </div>
+
           <SwapCard>
-            {!params.swapId && <SwapHeader icon={UncheckedIcon} />}
-            {params.swapId && !isAcceptor && <SwapHeader icon={UncheckedIcon} />}
-            {params.swapId && isAcceptor && isOfferUnedited && <SwapHeader icon={CheckedIcon} />}
-            {params.swapId && isAcceptor && !isOfferUnedited && <SwapHeader icon={UncheckedIcon} />}
+            {!params.swapId && <SwapHeader icon={UncheckedIcon} order={-1} />}
+            {params.swapId && !isAcceptor && <SwapHeader icon={UncheckedIcon} order={-1} />}
+            {params.swapId && isAcceptor && isOfferUnedited && <SwapHeader icon={CheckedIcon} order={-1} />}
+            {params.swapId && isAcceptor && !isOfferUnedited && <SwapHeader icon={UncheckedIcon} order={-1} />}
 
             <SwapSearch
               wallet={secondaryWallet}

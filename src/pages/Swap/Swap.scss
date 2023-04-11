@@ -1,8 +1,44 @@
-.swap-container {
-  .swapcards-container {
-    display: flex;
-  }
+@media (min-width: 1000px) {
+  .swap-container {
+    .swapcards-container {
+      display: flex;
 
+      .agreement-img {
+        margin-top: 5.5rem;
+
+        img {
+          height: 70px;
+        }
+      }
+    }
+
+    .buttons-container {
+      margin-top: 3em;
+      text-align: center;
+
+      span {
+        background-color: #18182d;
+        transition: all 0.7s ease-in-out;
+        padding: 0.5em 1.5em;
+        border-radius: 2em;
+        color: white;
+        border: 1px solid rgb(119, 0, 255);
+      }
+
+      :hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@media (max-width: 999px) {
+  .agreement-img {
+    display: none;
+  }
+}
+
+.swap-container {
   .buttons-container {
     margin-top: 3em;
     text-align: center;

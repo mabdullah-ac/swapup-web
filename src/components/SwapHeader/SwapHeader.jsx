@@ -1,13 +1,20 @@
 import "./SwapHeader.scss";
-import PlayerImage from "../../assets/player.png";
+import { useEffect, useRef } from "react";
+import PlayerImage from "../../assets/Layer 3.png";
 
-function SwapHeader({icon}) {
+function SwapHeader({ icon, order }) {
+  const el = useRef();
+
+  useEffect(() => {
+    el.current.style.order = order;
+  }, []);
+
   return (
-    <header className="header">
+    <header className="swap-header">
       <div className="player-img">
         <img src={PlayerImage} alt="" />
       </div>
-      <div className="status-icon">
+      <div className="status-icon" ref={el}>
         <img src={icon} alt="" />
       </div>
     </header>

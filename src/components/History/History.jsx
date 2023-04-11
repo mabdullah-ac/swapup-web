@@ -66,7 +66,7 @@ function History() {
 
   const walletUI = (h) => {
     const acceptAddress = connectedWallet === h.init_address ? h.accept_address : h.init_address;
-    return utils.shortenWalletAddress(acceptAddress);
+    return <div className="address-wallet">{utils.shortenWalletAddress(acceptAddress)}</div>;
   };
 
   const dateUI = (h) => {
@@ -80,7 +80,7 @@ function History() {
 
     return (
       <span
-        className="view-modal-btn"
+        className="view-btn"
         onClick={() => {
           setIsModalOpen(true);
           setModalData(temp);
@@ -193,7 +193,10 @@ function History() {
           <img src={loaderImg} alt="" />
         </div>
       )}
-      {!isLoading && <Table data={history} config={config} keyFn={keyFn} />}
+
+      <div className="table-bg">
+        <div className="table-scroll">{!isLoading && <Table data={history} config={config} keyFn={keyFn} />}</div>
+      </div>
     </>
   );
 }

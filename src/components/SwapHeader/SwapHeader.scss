@@ -1,4 +1,4 @@
-.header {
+.swap-header {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,6 +15,13 @@
     height: 100%;
     object-fit: cover;
     border-radius: 100%;
+  }
+}
+
+.status-icon {
+  img {
+    width: 75%;
+    height: 75%;
   }
 }
 

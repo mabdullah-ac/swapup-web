@@ -3,7 +3,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import useAppContext from "../../hooks/use-app-context";
 
 import HeroImage from "../../assets/HeroImage.jpg";
-import ProfilePicture from "../../assets/Untitled-2.jpg";
+import ProfilePicture from "../../assets/true-1.png";
 
 function HomePage() {
   const { connectedWallet } = useAppContext();
@@ -21,7 +21,7 @@ function HomePage() {
         <div className="wallet-profile">
           <img src={ProfilePicture} alt="Display" />
         </div>
-        <div className="logged-account">{accountNumberUI}</div>
+        <div className="active-account">{accountNumberUI}</div>
       </header>
 
       <nav className="home-nav">

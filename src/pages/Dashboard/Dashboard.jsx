@@ -1,12 +1,16 @@
 import "./Dashboard.scss";
 import { Outlet } from "react-router-dom";
-import LeftNav from "../../components/LeftNav/LeftNav"
+import LeftNav from "../../components/LeftNav/LeftNav";
 
 function DashboardPage() {
   return (
     <div className="container">
-      <LeftNav className="sidenav" />
-      <Outlet className="outlet" />
+      <div className="sidenav-container">
+        <LeftNav />
+      </div>
+      <div className="outlet-container">
+        <Outlet />
+      </div>
     </div>
   );
 }

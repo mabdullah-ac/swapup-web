@@ -1,7 +1,7 @@
 .logo {
-  padding-top: 2em;
+  margin-top: 1.75em;
   padding-bottom: 4.75em;
-  text-align: center;
+  margin-left: 2.1em;
 
   img {
     display: inline-block;
@@ -46,7 +46,7 @@
 }
 
 @media (min-width: 500px) {
-  .nav{
+  .nav {
     a {
       width: 40%;
     }
@@ -55,6 +55,7 @@
 
 @media (min-width: 720px) {
   .nav {
+    width: 85%;
     a {
       width: 100%;
     }

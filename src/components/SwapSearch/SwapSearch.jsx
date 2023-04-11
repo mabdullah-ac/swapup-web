@@ -7,7 +7,7 @@ function SwapSearch({ wallet, setWallet, disabled }) {
 
   return (
     <div className="wallet-search">
-      <input type="text" placeholder="wallet" value={wallet} onChange={handleChange} disabled={disabled} />
+      <input type="text" placeholder="wallet address" value={wallet} onChange={handleChange} disabled={disabled} />
     </div>
   );
 }

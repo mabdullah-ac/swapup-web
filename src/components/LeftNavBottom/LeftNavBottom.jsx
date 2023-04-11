@@ -2,6 +2,7 @@ import "./LeftNavBottom.scss";
 import { useEffect } from "react";
 import useAppContext from "../../hooks/use-app-context";
 import { FaTwitter, FaDiscord } from "react-icons/fa";
+import { SiMedium } from "react-icons/si";
 import metamask from "../../utils/metamask";
 
 function LeftNavBottom() {
@@ -42,11 +43,14 @@ function LeftNavBottom() {
         Connect Wallet
       </button>
       <div className="social-ic">
-        <a href="https://twitter.com/swapup_trade" className="link-ic">
+        <a href="https://twitter.com/swapup_trade" className="social-icon">
           <FaTwitter />
         </a>
-        <a href="https://discord.gg/UGt25aGB5U" className="link-ic">
+        <a href="https://discord.gg/UGt25aGB5U" className="social-icon">
           <FaDiscord />
+        </a>
+        <a href="https://medium.com/@swapup" className="social-icon">
+          <SiMedium />
         </a>
       </div>
     </div>

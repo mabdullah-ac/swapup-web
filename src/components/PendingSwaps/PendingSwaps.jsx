@@ -30,7 +30,11 @@ function PendingSwaps() {
 
   const walletUI = (pending) => {
     const acceptAddress = connectedWallet === pending.init_address ? pending.accept_address : pending.init_address;
-    return <NavLink to={`/swap/${pending.id}`}>{utils.shortenWalletAddress(acceptAddress)}</NavLink>;
+    return (
+      <NavLink className="address-wallet" to={`/swap/${pending.id}`}>
+        {utils.shortenWalletAddress(acceptAddress)}
+      </NavLink>
+    );
   };
 
   const dateUI = (pending) => {
@@ -82,7 +86,9 @@ function PendingSwaps() {
           <img src={loaderImg} alt="" />
         </div>
       )}
-      {!isLoading && <Table data={pending} config={config} keyFn={keyFn} />}
+      <div className="table-bg">
+        <div className="table-scroll">{!isLoading && <Table data={pending} config={config} keyFn={keyFn} />}</div>
+      </div>
     </>
   );
 }

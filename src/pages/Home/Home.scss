@@ -8,10 +8,11 @@
 }
 
 .wallet-bg {
-  width: 100%;
-  height: 10em;
+  width: 97%;
+  margin: 0 auto;
+  height: 23.5vh;
   border-radius: 35px;
-  box-shadow: 0px 0px 114px -10px rgba(255, 255, 255, 0.25);
+  box-shadow: 0px 0px 114px -10px rgba(255, 255, 255, 0.17);
   text-align: center;
 
   img {
@@ -24,24 +25,24 @@
 
 .wallet-profile {
   text-align: center;
-  margin-top: -2.5em;
+  margin-top: -3.4em;
 
   img {
     border-radius: 100%;
-    width: 6.5em;
-    height: 6.5em;
+    width: 8.25em;
+    height: 8.25em;
     object-fit: cover;
     border: 3px solid white;
   }
 }
 
-.logged-account {
-  font-size: 1.5rem;
+.active-account {
+  font-size: 1.55rem;
   font-weight: 800;
   text-align: center;
   color: #fff;
-  margin-top: 0.5em;
-  margin-bottom: 0.8em;
+  margin-top: 0.675em;
+  margin-bottom: 1.6em;
 }
 
 .home-nav {
@@ -50,14 +51,14 @@
   column-gap: 1em;
 
   a {
+    font-size: 0.8rem;
     text-decoration: none;
-    width: 13em;
-    height: 3em;
+    width: 10.925em;
+    height: 2.75em;
     background: #22223f;
     border-radius: 9px;
     color: #ffffff;
-    font-size: calc(0.6rem + 0.25vw);
-    font-weight: 500;
+    font-weight: 600;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -74,5 +75,5 @@
 }
 
 .home-outlet {
-  margin-top: 2em;
+  margin-top: 1.5em;
 }

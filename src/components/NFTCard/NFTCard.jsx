@@ -2,6 +2,9 @@ import "./NFTCard.scss";
 import { useState, useEffect, useRef } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import className from "classnames";
+import BuildImg from "../../assets/build.svg";
+import BoatImg from "../../assets/boat.svg";
+import CheckedImg from "../../assets/checked-icon.png";
 
 function NFTCard({ nft, selectedNFTs, setSelectedNFTs, pending, isAcceptor, ...rest }) {
   const [isSelected, setIsSelected] = useState(false);
@@ -96,14 +99,14 @@ function NFTCard({ nft, selectedNFTs, setSelectedNFTs, pending, isAcceptor, ...r
     // eslint-disable-next-line
   }, [isSelected]);
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     if (!isPending) {
-      e.target.parentNode.style.order = -2;
+      el.current.style.order = -2;
       setIsSelected(!isSelected);
     }
 
     if (isSelected) {
-      e.target.parentNode.style.order = 0;
+      el.current.style.order = 0;
     }
   };
 
@@ -137,13 +140,30 @@ function NFTCard({ nft, selectedNFTs, setSelectedNFTs, pending, isAcceptor, ...r
 
   return (
     <div {...rest} className="nft-card" ref={el}>
-      <img
-        src={nft.rawMetadata.image}
-        alt={nft.rawMetadata.name}
-        onClick={pathname === "/swap" || isAcceptor ? handleClick : undefined}
-        className={computeClasses()}
-      />
-      <p>{`${nft.title} ${nft.tokenId}`}</p>
+      <div className="nft-img" onClick={pathname === "/swap" || isAcceptor ? handleClick : undefined}>
+        <img src={nft.rawMetadata.image} alt={nft.rawMetadata.name} className={computeClasses()} />
+        {isSelected && (
+          <div className="check-nft">
+            <img src={CheckedImg} alt="Checked icon" />
+          </div>
+        )}
+      </div>
+      <div className="nft-details">
+        <div className="nft-name">{nft.title}</div>
+        <div className="IdnBtns">
+          <div className="nft-id">
+            <h6 id="nft-id">#{nft.tokenId}</h6>
+          </div>
+          <div>
+            <a href="" target="_blank">
+              <img src={BuildImg} height="20px" alt="" />
+            </a>
+            <a href="" target="_blank">
+              <img src={BoatImg} height="20px" alt="" />
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
