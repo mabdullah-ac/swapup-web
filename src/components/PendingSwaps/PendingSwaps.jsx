@@ -7,6 +7,7 @@ import api from "../../utils/api";
 import utils from "../../utils/utils";
 import CancelIcon from "../../assets/cancel-icon.svg";
 import loaderImg from "../../assets/Interwind-1s-200px.svg";
+import ui from "../../utils/ui";
 
 function PendingSwaps() {
   const { connectedWallet } = useAppContext();
@@ -56,7 +57,7 @@ function PendingSwaps() {
   const cancelSwap = async (id) => {
     const res = await api.updateSwapStatus({ id: id, status: 0 });
     if (res.success) {
-      alert("Offer Cancelled");
+      ui.alert("Offer Cancelled");
       const response = await api.getPendingSwapsForWallet(connectedWallet);
 
       response.data.sort((a, b) => {

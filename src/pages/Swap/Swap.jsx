@@ -11,6 +11,7 @@ import metamask from "../../utils/metamask";
 import CheckedIcon from "../../assets/checked-icon.png";
 import UncheckedIcon from "../../assets/un-checked.png";
 import AgreementImg from "../../assets/agreement.png";
+import ui from "../../utils/ui";
 
 function SwapPage() {
   const { connectedWallet } = useAppContext();
@@ -127,7 +128,7 @@ function SwapPage() {
   const handleOfferClick = async () => {
     //make sure atleast one nft is selected on either side
     if (primarySelected.length === 0 || secondarySelected.length === 0) {
-      alert("Please select at least one item from each wallet");
+      ui.alert("Please select at least one item from each wallet");
       return;
     }
 
@@ -159,7 +160,7 @@ function SwapPage() {
 
     let signature = await metamask.getUserSignature(swap);
     if (!signature) {
-      alert("Not signed");
+      ui.alert("Not signed");
       return;
     }
 
@@ -167,7 +168,7 @@ function SwapPage() {
 
     let approval = await metamask.getUserApproval(swap, true);
     if (!approval) {
-      alert("Not approved");
+      ui.alert("Not approved");
       return;
     }
 
@@ -176,10 +177,10 @@ function SwapPage() {
     else res = await api.createSwapOffer(swap);
 
     if (res.success) {
-      alert("Offer Successfully Sent");
+      ui.alert("Offer Successfully Sent");
       navigate("/");
     } else {
-      alert("an error occurred while sending the offer");
+      ui.alert("an error occurred while sending the offer");
     }
   };
 
@@ -202,10 +203,10 @@ function SwapPage() {
         metadata: JSON.stringify(existingSwap.metadata),
       });
       if (res2.success) {
-        alert("Swap Failed");
+        ui.alert("Swap Failed");
         navigate("/");
       } else {
-        alert(`An error occurred while accepting the swap. Blockchain status 4. Contact the admin`);
+        ui.alert(`An error occurred while accepting the swap. Blockchain status 4. Contact the admin`);
       }
       return;
     }
@@ -224,12 +225,12 @@ function SwapPage() {
       timestamp: res.timestamp,
     });
     if (res2.success) {
-      alert("Swap Completed");
+      ui.alert("Swap Completed");
       setTimeout(() => {
         navigate("/");
       }, 5000);
     } else {
-      alert(`An error occurred while accepting the swap. Blockchain status ${stts}. Contact the admin`);
+      ui.alert(`An error occurred while accepting the swap. Blockchain status ${stts}. Contact the admin`);
     }
   };
 
@@ -244,10 +245,10 @@ function SwapPage() {
       metadata: JSON.stringify(existingSwap.metadata),
     });
     if (res.success) {
-      alert("Offer Rejected");
+      ui.alert("Offer Rejected");
       navigate("/");
     } else {
-      alert("an error occurred while rejecting the swap");
+      ui.alert("an error occurred while rejecting the swap");
     }
   };
 
@@ -270,9 +271,9 @@ function SwapPage() {
       <div className="swap-container">
         <div className="swapcards-container">
           <SwapCard>
-            {!params.swapId && <SwapHeader icon={UncheckedIcon} />}
-            {params.swapId && !isAcceptor && <SwapHeader icon={CheckedIcon} />}
-            {params.swapId && isAcceptor && <SwapHeader icon={UncheckedIcon} />}
+            {!params.swapId && <SwapHeader icon={UncheckedIcon} justify={"flex-end"} rotate={"180deg"} />}
+            {params.swapId && !isAcceptor && <SwapHeader icon={CheckedIcon} justify={"flex-end"} rotate={"180deg"} />}
+            {params.swapId && isAcceptor && <SwapHeader icon={UncheckedIcon} justify={"flex-end"} rotate={"180deg"} />}
 
             <SwapSearch wallet={connectedWallet} disabled={true} />
             {connectedWallet && primaryPending && (

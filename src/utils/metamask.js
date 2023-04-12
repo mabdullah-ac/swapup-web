@@ -1,5 +1,6 @@
 import abi from "./abi";
 import { ethers } from "ethers";
+import ui from "./ui";
 
 const metamask = {
   networkName: "goerli",
@@ -37,7 +38,7 @@ const metamask = {
 
       //make sure we are connected to the right network in metamask
       if (network.name !== this.networkName) {
-        alert(`Please connect to the correct network`);
+        ui.alert(`Please connect to the correct network`);
         return;
       }
 
@@ -54,10 +55,10 @@ const metamask = {
       console.log("Current Signer: ", userAddress);
       // if (typeof home !== "undefined") home.loadNftsOnMainPage();
 
-      if (userAddress === undefined) alert("Could not get wallet address");
+      if (userAddress === undefined) ui.alert("Could not get wallet address");
       else return userAddress;
     } else {
-      alert("Please install metamask.");
+      ui.alert("Please install metamask.");
     }
   },
 

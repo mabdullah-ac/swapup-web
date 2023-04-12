@@ -5,6 +5,7 @@ import className from "classnames";
 import BuildImg from "../../assets/build.svg";
 import BoatImg from "../../assets/boat.svg";
 import CheckedImg from "../../assets/checked-icon.png";
+import ui from "../../utils/ui";
 
 function NFTCard({ nft, selectedNFTs, setSelectedNFTs, pending, isAcceptor, ...rest }) {
   const [isSelected, setIsSelected] = useState(false);
@@ -155,10 +156,10 @@ function NFTCard({ nft, selectedNFTs, setSelectedNFTs, pending, isAcceptor, ...r
             <h6 id="nft-id">#{nft.tokenId}</h6>
           </div>
           <div>
-            <a href="" target="_blank">
+            <a href={ui.getEtherScanContractNftUrl(nft.contract.address, nft.tokenId)} target="_blank" rel="noreferrer">
               <img src={BuildImg} height="20px" alt="" />
             </a>
-            <a href="" target="_blank">
+            <a href={ui.getOpenSeaNftUrl(nft.contract.address, nft.tokenId)} target="_blank" rel="noreferrer" >
               <img src={BoatImg} height="20px" alt="" />
             </a>
           </div>
