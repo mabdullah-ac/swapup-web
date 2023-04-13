@@ -2,3 +2,11 @@
   margin-top: 1.25em;
   width: 50%;
 }
+
+@media (max-width: 999px) {
+  .swapcard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

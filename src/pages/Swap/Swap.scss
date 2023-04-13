@@ -1,3 +1,17 @@
+@media (max-width: 999px) {
+  .swapcards-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .agreement-img {
+    display: none;
+  }
+
+  
+}
+
 @media (min-width: 1000px) {
   .swap-container {
     .swapcards-container {

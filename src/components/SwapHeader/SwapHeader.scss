@@ -1,3 +1,30 @@
+@media (max-width: 999px) {
+  .status-icon {
+    display: none;
+  }
+
+  .nft-container {
+    display: grid;
+    grid-gap: 1.25em;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 250px));
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@media (min-width: 1000px) {
+  .status-icon {
+    text-align: center;
+    vertical-align: middle;
+    margin: 0 2.5em;
+
+    img {
+      width: 75%;
+      height: 75%;
+    }
+  }
+}
+
 .swap-header {
   display: flex;
   align-items: center;
@@ -18,43 +45,3 @@
   }
 }
 
-.status-icon {
-  text-align: center;
-  vertical-align: middle;
-  margin: 0 2.5em;
-
-  img {
-    width: 75%;
-    height: 75%;
-  }
-}
-
-.wallet-search {
-  width: 100%;
-  margin: 2em auto;
-
-  input {
-    background: #22223f;
-    text-align: center;
-    border: none;
-    border-radius: 24px;
-    height: 33px;
-    width: 100%;
-    outline: none;
-    color: white;
-  }
-}
-
-.nft-container {
-  display: grid;
-  grid-gap: 1.25em;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  margin: 0;
-  padding: 0;
-}
-
-.checked {
-  background: linear-gradient(270deg, #51bfffab 0%, #9452ffa4 100%);
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
-}
