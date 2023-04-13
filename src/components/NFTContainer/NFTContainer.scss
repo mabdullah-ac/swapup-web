@@ -1,14 +1,20 @@
-.nft-container {
-  display: grid;
-  grid-gap: 1.2em;
-  grid-template-columns: repeat(auto-fill, 155px);
-  margin: 0;
-  padding: 0;
+@media (max-width: 1074px) {
+  .nft-container {
+    width: 100%;
+    display: grid;
+    grid-gap: 1.2em;
+    grid-template-columns: repeat(auto-fill, 155px);
+    margin: 0;
+    padding: 0;
+  }
 }
 
-@media (max-width: 999px) {
+@media (min-width: 1075px) {
   .nft-container {
-    width: inherit;
-    margin: 0 auto;
+    display: grid;
+    grid-gap: 1.2em;
+    grid-template-columns: repeat(auto-fill, 155px);
+    margin: 0;
+    padding: 0;
   }
 }
