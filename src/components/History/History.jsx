@@ -6,8 +6,11 @@ import api from "../../utils/api";
 import utils from "../../utils/utils";
 import CheckIcon from "../../assets/checked-icon.png";
 import CancelIcon from "../../assets/cancel-icon.svg";
+import HappyIcon from "../../assets/happy.svg";
 import Modal from "react-modal";
 import loaderImg from "../../assets/Interwind-1s-200px.svg";
+import AgreementImg from "../../assets/agreement.png";
+import WalletImg from "../../assets/Untitled-1 (11).png";
 
 const customStyles = {
   content: {
@@ -22,6 +25,7 @@ const customStyles = {
     padding: "30px",
     width: "65%",
     color: "#fff",
+    border: "none",
   },
   overlay: {
     position: "fixed",
@@ -29,7 +33,7 @@ const customStyles = {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    backgroundColor: "rgba(0, 0, 0, 0.75)",
   },
 };
 
@@ -164,10 +168,16 @@ function History() {
         style={customStyles}
         contentLabel="History Modal"
       >
-        <div className="heading">Swap Summary</div>
+        <div className="modal-header-icon">
+          <img src={HappyIcon} alt="" />
+        </div>
+        <div className="modal-heading">Swap Summary</div>
         <div className="modal-body">
           <div>
-            <p>{connectedWallet}</p>
+            <div className="modal-wallet">
+              <img src={WalletImg} alt="" />
+              <p>{connectedWallet}</p>
+            </div>
             {connectedWallet === modalData.init_address
               ? modalData.metadata?.init.tokens.map((token, index) => (
                   <img key={index} src={token.image} alt={token.name} />
@@ -176,8 +186,16 @@ function History() {
                   <img key={index} src={token.image} alt={token.name} />
                 ))}
           </div>
+
+          <div className="modal-agreement">
+            <img src={AgreementImg} alt="" />
+          </div>
+
           <div>
-            <p>{connectedWallet === modalData.init_address ? modalData.accept_address : modalData.init_address}</p>
+            <div className="modal-wallet">
+              <p>{connectedWallet === modalData.init_address ? modalData.accept_address : modalData.init_address}</p>
+              <img src={WalletImg} alt="" />
+            </div>
             {connectedWallet === modalData.init_address
               ? modalData.metadata?.accept.tokens.map((token, index) => (
                   <img key={index} src={token.image} alt={token.name} />

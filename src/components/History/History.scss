@@ -27,19 +27,43 @@
   background-clip: text;
 }
 
-.heading {
+.modal-header-icon {
+  display: flex;
+  justify-content: center;
+}
+
+.modal-heading {
   font-weight: 700;
   font-size: 30px;
   line-height: 36px;
   text-align: center;
+  margin-top: 1em;
   margin-bottom: 1em;
 }
 
 .modal-body {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 
   img {
     max-height: 200px;
+  }
+}
+
+.modal-wallet {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 45px;
+    margin-top: -5px;
+  }
+}
+
+.modal-agreement {
+  margin-top: 4rem;
+
+  img {
+    height: 90px;
   }
 }
